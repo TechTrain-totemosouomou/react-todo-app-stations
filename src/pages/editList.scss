@@ -1,21 +1,21 @@
 @charset "utf-8";
+@import 'src/_variables.scss';
 
-.edit-task {
+.edit-list {
   width: 1000px;
   margin: 0 auto;
 }
 
-.edit-task-form {
+.edit-list-form {
   color: #555555;
 }
 
-.edit-task-title,
-.edit-task-detail {
+.edit-list-title {
   width: 300px;
   margin-bottom: 25px;
 }
 
-.delete-task-button {
+.delete-list-button {
   color: #ff3333;
   border: solid 1px #ff3333;
   width: 80px;
@@ -24,8 +24,8 @@
   border-radius: 5px;
 }
 
-.edit-task-button {
-  background-color: #242f9b;
+.edit-list-button {
+  background-color: $site-color;
   color: #ffffff;
   width: 80px;
   height: 40px;
