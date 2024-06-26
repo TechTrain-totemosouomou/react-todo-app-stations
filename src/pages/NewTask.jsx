@@ -11,16 +11,21 @@ export const NewTask = () => {
   const [lists, setLists] = useState([])
   const [title, setTitle] = useState('')
   const [detail, setDetail] = useState('')
+  const [limit, setLimit] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
   const [cookies] = useCookies()
   const navigate = useNavigate()
   const handleTitleChange = (e) => setTitle(e.target.value)
   const handleDetailChange = (e) => setDetail(e.target.value)
+  const handleLimitChange = (e) => setLimit(e.target.value)
   const handleSelectList = (id) => setSelectListId(id)
   const onCreateTask = () => {
+    const formattedLimit = new Date(limit).toISOString();
+
     const data = {
       title: title,
       detail: detail,
+      limit: formattedLimit,
       done: false,
     }
 
@@ -89,6 +94,15 @@ export const NewTask = () => {
             onChange={handleDetailChange}
             className="new-task-detail"
           />
+          <br />
+          <label>期限</label>
+          <br />
+          <input
+            type="datetime-local"
+            onChange={handleLimitChange}
+            className="new-task-limit"
+          />
+          <br />
           <br />
           <button
             type="button"
