@@ -1,4 +1,5 @@
 @charset "utf-8";
+@import 'src/_variables.scss';
 
 .signin {
   width: 500px;
@@ -23,7 +24,7 @@
 }
 
 .signin-button {
-  background-color: #242f9b;
+  background-color: $site-color;
   color: #ffffff;
   width: 100px;
   height: 40px;
