@@ -125,6 +125,37 @@ export const Home = () => {
 // 表示するタスク
 const Tasks = (props) => {
   const { tasks, selectListId, isDoneDisplay } = props
+  const formatDateToDatetimeLocal = (isoString) => {
+    const date = new Date(isoString);
+    return date.toLocaleString('ja-JP', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false, // 24時間表示
+    });
+  };
+  const getRemainingTimeMessage = (isoString) => {
+    const targetDate = new Date(isoString);
+    const currentDate = new Date();
+    // 過去の日時かどうかをチェック
+    if (targetDate < currentDate) {
+      return '時間切れ';
+    }
+    const diffTime = Math.abs(targetDate - currentDate);
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    const diffHours = Math.floor(diffTime / (1000 * 60 * 60)) % 24;
+    const diffMinutes = Math.floor(diffTime / (1000 * 60)) % 60 + 1;
+    if (diffDays >= 1) {
+      return `${diffDays} 日と${diffHours} 時間${diffMinutes} 分`;
+    } else if (diffHours >= 1 && diffMinutes != 60) {
+      return `${diffHours} 時間${diffMinutes} 分`;
+    } else if (diffMinutes >= 0) {
+      return `${diffMinutes} 分`;
+    }
+  };
+
   if (tasks === null) return <></>
 
   if (isDoneDisplay === 'done') {
@@ -143,6 +174,7 @@ const Tasks = (props) => {
                 {task.title}
                 <br />
                 {task.done ? '完了' : '未完了'}
+                  ：残り{getRemainingTimeMessage(task.limit)} - 期限：{formatDateToDatetimeLocal(task.limit)}
               </Link>
             </li>
           ))}
@@ -165,6 +197,7 @@ const Tasks = (props) => {
               {task.title}
               <br />
               {task.done ? '完了' : '未完了'}
+                ：残り{getRemainingTimeMessage(task.limit)} - 期限：{formatDateToDatetimeLocal(task.limit)}
             </Link>
           </li>
         ))}

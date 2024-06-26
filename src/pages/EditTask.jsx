@@ -12,16 +12,21 @@ export const EditTask = () => {
   const [cookies] = useCookies()
   const [title, setTitle] = useState('')
   const [detail, setDetail] = useState('')
+  const [limit, setLimit] = useState('')
   const [isDone, setIsDone] = useState()
   const [errorMessage, setErrorMessage] = useState('')
   const handleTitleChange = (e) => setTitle(e.target.value)
   const handleDetailChange = (e) => setDetail(e.target.value)
+  const handleLimitChange = (e) => setLimit(e.target.value)
   const handleIsDoneChange = (e) => setIsDone(e.target.value === 'done')
   const onUpdateTask = () => {
+    const formattedLimit = new Date(limit).toISOString();
+
     console.log(isDone)
     const data = {
       title: title,
       detail: detail,
+      limit: formattedLimit,
       done: isDone,
     }
 
@@ -64,8 +69,21 @@ export const EditTask = () => {
       })
       .then((res) => {
         const task = res.data
+        const formatDateToDatetimeLocal = (isoString) => {
+          const date = new Date(isoString);
+          return date.toLocaleString('ja-JP', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false, // 24時間表示
+          }).replace(/\//g, '-');
+        };
+
         setTitle(task.title)
         setDetail(task.detail)
+        setLimit(formatDateToDatetimeLocal(task.limit));
         setIsDone(task.done)
       })
       .catch((err) => {
@@ -97,6 +115,16 @@ export const EditTask = () => {
             className="edit-task-detail"
             value={detail}
           />
+          <br />
+          <label>期限</label>
+          <br />
+          <input
+            type="datetime-local"
+            onChange={handleLimitChange}
+            className="edit-task-limit"
+            value={limit}
+          />
+          <br />
           <br />
           <div>
             <input
