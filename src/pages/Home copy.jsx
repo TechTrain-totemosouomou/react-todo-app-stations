@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
@@ -13,6 +13,7 @@ export const Home = () => {
   const [tasks, setTasks] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
   const [cookies] = useCookies();
+  const listRefs = useRef([]);
 
   const handleIsDoneDisplayChange = (e) => setIsDoneDisplay(e.target.value);
 
@@ -66,6 +67,32 @@ export const Home = () => {
       });
   };
 
+  useEffect(() => {
+    const activeIndex = lists.findIndex((list) => list.id === selectListId);
+    if (activeIndex >= 0) {
+      listRefs.current[activeIndex].focus();
+    }
+  }, [lists, selectListId]);
+
+  const handleKeyDown = (e, index) => {
+    switch (e.key) {
+      case 'ArrowRight':
+        if (index < lists.length - 1) {
+          listRefs.current[index + 1].focus();
+          handleSelectList(lists[index + 1].id);
+        }
+        break;
+      case 'ArrowLeft':
+        if (index > 0) {
+          listRefs.current[index - 1].focus();
+          handleSelectList(lists[index - 1].id);
+        }
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <div>
       <Header />
@@ -91,11 +118,13 @@ export const Home = () => {
               return (
                 <li
                   key={list.id}
+                  ref={(el) => (listRefs.current[index] = el)}
                   className={`list-tab-item ${isActive ? 'active' : ''}`}
-                  tabIndex="0"
+                  tabIndex={isActive ? 0 : -1}
                   aria-selected={isActive}
                   role="tab"
                   onClick={() => handleSelectList(list.id)}
+                  onKeyDown={(e) => handleKeyDown(e, index)}
                 >
                   {list.title}
                 </li>
