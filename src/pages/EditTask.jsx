@@ -19,8 +19,10 @@ export const EditTask = () => {
   const handleDetailChange = (e) => setDetail(e.target.value)
   const handleLimitChange = (e) => setLimit(e.target.value)
   const handleIsDoneChange = (e) => setIsDone(e.target.value === 'done')
+
   const onUpdateTask = () => {
-    const formattedLimit = new Date(limit).toISOString();
+    const formattedLimit = new Date(limit);
+    formattedLimit.setHours(formattedLimit.getHours() - 9);
 
     console.log(isDone)
     const data = {
@@ -69,21 +71,11 @@ export const EditTask = () => {
       })
       .then((res) => {
         const task = res.data
-        const formatDateToDatetimeLocal = (isoString) => {
-          const date = new Date(isoString);
-          return date.toLocaleString('ja-JP', {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: false, // 24時間表示
-          }).replace(/\//g, '-');
-        };
-
+        const localDate = new Date(task.limit);
+        localDate.setHours(localDate.getHours() + 9);
         setTitle(task.title)
         setDetail(task.detail)
-        setLimit(formatDateToDatetimeLocal(task.limit));
+        setLimit(localDate.toISOString());
         setIsDone(task.done)
       })
       .catch((err) => {
@@ -122,7 +114,7 @@ export const EditTask = () => {
             type="datetime-local"
             onChange={handleLimitChange}
             className="edit-task-limit"
-            value={limit}
+            value={limit.slice(0, 16)}
           />
           <br />
           <br />
