@@ -1,1 +1,122 @@
-$site-color: #000;
+$site-color: #555;
+
+// 768px 以下のスタイル
+@media (max-width: 768px) {
+  .taskList,
+  .signup,
+  .signin,
+  .new-list,
+  .edit-list,
+  .new-task,
+  .edit-task {
+    width: 80%;
+  }
+
+  .list-tab-item {
+    width: 80px;
+    padding: 0 15px;
+  }
+
+  .task-item {
+    height: 60px;
+    font-size: medium;
+  }
+
+  .display-select-wrapper {
+    width: 80px;
+  }
+
+  .email-input,
+  .name-input,
+  .password-input,
+  .new-list-title,
+  .edit-list-title,
+  .edit-task-title,
+  .new-task-title,
+  .new-task-detail,
+  .edit-task-detail {
+    width: 80%;
+  }
+
+  .delete-list-button,
+  .edit-list-button,
+  .delete-task-button,
+  .edit-task-button,
+  .new-list-button,
+  .new-task-button,
+  .signup-button,
+  .signin-button {
+    width: 70px;
+    height: 35px;
+  }
+
+  .signup-form,
+  .signin-form {
+    margin: 20px 0;
+  }
+}
+
+// 320px 以下のスタイル
+@media (max-width: 320px) {
+  .taskList,
+  .signup,
+  .signin,
+  .new-list,
+  .edit-list,
+  .new-task,
+  .edit-task {
+    width: 100%;
+  }
+
+  .list-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .list-menu {
+    text-align: left;
+  }
+
+  .list-tab-item {
+    width: 70px;
+    padding: 0 10px;
+  }
+
+  .task-item {
+    height: 50px;
+    font-size: small;
+  }
+
+  .display-select-wrapper {
+    width: 60px;
+  }
+
+  .email-input,
+  .name-input,
+  .password-input,
+  .new-list-title,
+  .edit-list-title,
+  .edit-task-title,
+  .new-task-title,
+  .new-task-detail,
+  .edit-task-detail {
+    width: 100%;
+  }
+
+  .delete-list-button,
+  .edit-list-button,
+  .delete-task-button,
+  .edit-task-button,
+  .new-list-button,
+  .new-task-button,
+  .signup-button,
+  .signin-button {
+    width: 60px;
+    height: 30px;
+  }
+
+  .signup-form,
+  .signin-form {
+    margin: 15px 0;
+  }
+}

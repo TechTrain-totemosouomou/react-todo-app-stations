@@ -20,7 +20,7 @@ export const NewTask = () => {
   const handleLimitChange = (e) => setLimit(e.target.value)
   const handleSelectList = (id) => setSelectListId(id)
   const onCreateTask = () => {
-    const formattedLimit = new Date(limit).toISOString();
+    const formattedLimit = new Date(limit).toISOString()
 
     const data = {
       title: title,

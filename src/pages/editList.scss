@@ -35,3 +35,37 @@
 .error-message {
   color: #ff3333;
 }
+
+// 768px 以下のスタイル
+@media (max-width: 768px) {
+  .edit-list {
+    width: 80%;
+  }
+
+  .edit-list-title {
+    width: 80%;
+  }
+
+  .delete-list-button,
+  .edit-list-button {
+    width: 70px;
+    height: 35px;
+  }
+}
+
+// 320px 以下のスタイル
+@media (max-width: 320px) {
+  .edit-list {
+    width: 100%;
+  }
+
+  .edit-list-title {
+    width: 100%;
+  }
+
+  .delete-list-button,
+  .edit-list-button {
+    width: 60px;
+    height: 30px;
+  }
+}

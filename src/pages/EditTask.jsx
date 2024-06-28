@@ -17,18 +17,25 @@ export const EditTask = () => {
   const [errorMessage, setErrorMessage] = useState('')
   const handleTitleChange = (e) => setTitle(e.target.value)
   const handleDetailChange = (e) => setDetail(e.target.value)
-  const handleLimitChange = (e) => setLimit(e.target.value)
+  const handleLimitChange = (e) => {
+    let value = e.target.value
+    if (!value.endsWith(':00Z')) {
+      value += ':00Z'
+    }
+    setLimit(value)
+  }
   const handleIsDoneChange = (e) => setIsDone(e.target.value === 'done')
 
   const onUpdateTask = () => {
-    const formattedLimit = new Date(limit);
-    formattedLimit.setHours(formattedLimit.getHours() - 9);
+    const formattedLimit = new Date(limit)
+    formattedLimit.setHours(formattedLimit.getHours() - 9)
+    const isoDateLimit = formattedLimit.toISOString()
 
     console.log(isDone)
     const data = {
       title: title,
       detail: detail,
-      limit: formattedLimit,
+      limit: isoDateLimit,
       done: isDone,
     }
 
@@ -71,11 +78,12 @@ export const EditTask = () => {
       })
       .then((res) => {
         const task = res.data
-        const localDate = new Date(task.limit);
-        localDate.setHours(localDate.getHours() + 9);
+        const localDate = new Date(task.limit)
+        localDate.setHours(localDate.getHours() + 9)
+
         setTitle(task.title)
         setDetail(task.detail)
-        setLimit(localDate.toISOString());
+        setLimit(localDate.toISOString())
         setIsDone(task.done)
       })
       .catch((err) => {
